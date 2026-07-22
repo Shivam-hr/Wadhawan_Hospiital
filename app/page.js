@@ -10,14 +10,9 @@ export default function HomePage() {
     <>
       <Header theme="navy" />
 
-   
-     {/* HERO — one integrated banner: the photo is the backdrop, not a
-          separate boxed card next to text. On mobile it stacks (photo
-          below the text) because overlaying text on a photo that short
-          and that wide isn't readable at phone widths. */}
+      {/* HERO */}
       <section className="bg-gradient-to-br from-sky-50 to-white border-b border-slate-100">
         <div className="mx-auto max-w-7xl px-4 py-8 md:py-0">
-          {/* Mobile: stacked */}
           <div className="md:hidden">
             <HeroCopy />
             <div className="relative w-full aspect-[1717/916] rounded-2xl overflow-hidden mt-6">
@@ -37,7 +32,6 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Desktop / tablet: one true banner, image as backdrop */}
           <div className="hidden md:block relative w-full aspect-[1717/916] max-h-[620px]">
             <Image
               src="/images/doctors-hospital-hero.png"
@@ -219,6 +213,26 @@ export default function HomePage() {
   );
 }
 
+function HeroCopy() {
+  return (
+    <>
+      <p className="section-eyebrow text-teal font-bold text-xs uppercase tracking-widest mb-3">Welcome to Wadhawan Hospital</p>
+      <h1 className="font-display text-3xl md:text-4xl lg:text-5xl font-extrabold text-navy leading-tight">
+        Advanced Orthopedics, Fertility &amp; Gyne Care
+      </h1>
+      <p className="text-teal font-semibold mt-3">Compassion &nbsp;|&nbsp; Care &nbsp;|&nbsp; Cure</p>
+      <p className="text-slate mt-4 max-w-md leading-relaxed">
+        Wadhawan Hospital is a multi-speciality healthcare center in Panipat providing advanced Orthopedic and Women&apos;s healthcare with compassionate care and modern technology.
+      </p>
+      <div className="flex flex-wrap gap-3 mt-6">
+        <Link href="/contact" className="bg-navy hover:bg-navy-dark text-white font-semibold rounded-lg px-6 py-3 flex items-center gap-2"><IconCalendar /> Book Appointment</Link>
+        <a href={`tel:${hospital.phoneTel}`} className="border-2 border-teal text-teal font-semibold rounded-lg px-6 py-3 flex items-center gap-2 bg-white/70 backdrop-blur hover:bg-white"><IconPhone /> Call Now</a>
+        <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(hospital.addressLine)}`} target="_blank" rel="noopener noreferrer" className="border-2 border-navy text-navy font-semibold rounded-lg px-6 py-3 flex items-center gap-2 bg-white/70 backdrop-blur hover:bg-white"><IconPin /> Get Directions</a>
+      </div>
+    </>
+  );
+}
+
 function MiniStat({ value, label }) {
   return (
     <div className="bg-white rounded-xl shadow-lg px-4 py-3 flex items-center gap-2 min-w-[190px]">
@@ -227,6 +241,16 @@ function MiniStat({ value, label }) {
         <p className="font-bold text-navy text-sm leading-tight">{value}</p>
         <p className="text-[11px] text-slate leading-tight">{label}</p>
       </div>
+    </div>
+  );
+}
+
+function MiniStatMobile({ value, label }) {
+  return (
+    <div className="bg-white rounded-xl shadow-sm border border-slate-100 px-2 py-3 text-center">
+      <span className="text-amber-400">★</span>
+      <p className="font-bold text-navy text-xs leading-tight mt-1">{value}</p>
+      <p className="text-[10px] text-slate leading-tight">{label}</p>
     </div>
   );
 }
