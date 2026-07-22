@@ -20,8 +20,8 @@ export default function Header({ theme = "navy" }) {
     <>
       {/* Top utility bar */}
       <div className={`${t.bar} text-white text-xs md:text-sm`}>
-        <div className="mx-auto max-w-7xl px-4 py-2 flex flex-wrap items-center justify-between gap-y-1">
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
+        <div className="mx-auto max-w-7xl px-14 py-2 flex flex-wrap items-center justify-between gap-y-1">
+          <div className="flex flex-wrap items-center gap-x-7 gap-y-1">
             <span className="flex items-center gap-1.5 whitespace-nowrap">
               <IconTruck /> 24x7 Emergency Care
             </span>
