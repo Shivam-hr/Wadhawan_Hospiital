@@ -10,9 +10,15 @@ export default function HomePage() {
     <>
       <Header theme="navy" />
 
-      {/* HERO */}
+      {/* HERO — one integrated banner: the photo is the backdrop, not a
+          separate boxed card next to text. On mobile it stacks (photo
+          below the text) because overlaying text on a photo that short
+          and that wide isn't readable at phone widths. The stat strip
+          lives inside this same section now, right under the banner,
+          instead of a separate section with a big gap after it. */}
       <section className="bg-gradient-to-br from-sky-50 to-white border-b border-slate-100">
-        <div className="mx-auto max-w-7xl px-4 py-8 md:py-0">
+        <div className="mx-auto max-w-7xl px-4 py-6 md:pt-6 md:pb-0">
+          {/* Mobile: stacked */}
           <div className="md:hidden">
             <HeroCopy />
             <div className="relative w-full aspect-[1717/916] rounded-2xl overflow-hidden mt-6">
@@ -32,7 +38,8 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="hidden md:block relative w-full aspect-[1717/916] max-h-[620px]">
+          {/* Desktop / tablet: one true banner, image as backdrop */}
+          <div className="hidden md:block relative w-full aspect-[1717/916] max-h-[520px]">
             <Image
               src="/images/doctors-hospital-hero.png"
               alt="Dr. Piyush & Dr. Pritika Wadhawan outside Wadhawan Hospital"
@@ -53,15 +60,15 @@ export default function HomePage() {
             </div>
           </div>
         </div>
-      </section>
 
-      {/* STATS */}
-      <section className="mx-auto max-w-7xl px-4 py-10 grid grid-cols-2 md:grid-cols-5 gap-4">
-        <StatCard icon={<span className="text-teal">👥</span>} value={hospital.happyPatients} label="Happy Patients" sub="Trusted by thousands of families" />
-        <StatCard icon={<span className="text-amber-500">★</span>} value={hospital.googleRating} label="Google Rating" sub={`${hospital.googleReviews} Reviews from our patients`} />
-        <StatCard icon={<span className="text-pink">24/7</span>} value="24×7" label="Emergency Care" sub="Always here when you need us" />
-        <StatCard icon={<span className="text-navy">🛡️</span>} value={hospital.yearsExperience} label="Years of Experience" sub="Delivering excellence in healthcare" />
-        <StatCard icon={<span className="text-purple-600">👨‍⚕️</span>} value={hospital.specialists} label="Expert Specialists" sub="Orthopedics & Gynecology" />
+        {/* Stat strip — part of the hero block, not a separate section */}
+        <div className="mx-auto max-w-7xl px-4 py-6 grid grid-cols-2 md:grid-cols-5 gap-3 md:gap-4">
+          <StatCard icon={<span className="text-teal">👥</span>} value={hospital.happyPatients} label="Happy Patients" sub="Trusted by thousands of families" />
+          <StatCard icon={<span className="text-amber-500">★</span>} value={hospital.googleRating} label="Google Rating" sub={`${hospital.googleReviews} Reviews from our patients`} />
+          <StatCard icon={<span className="text-pink">24/7</span>} value="24×7" label="Emergency Care" sub="Always here when you need us" />
+          <StatCard icon={<span className="text-navy">🛡️</span>} value={hospital.yearsExperience} label="Years of Experience" sub="Delivering excellence in healthcare" />
+          <StatCard icon={<span className="text-purple-600">👨‍⚕️</span>} value={hospital.specialists} label="Expert Specialists" sub="Orthopedics & Gynecology" />
+        </div>
       </section>
 
       {/* WHY CHOOSE US */}

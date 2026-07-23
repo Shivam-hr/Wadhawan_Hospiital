@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { hospital, navLinks, waLink } from "@/lib/site-data";
@@ -18,10 +19,12 @@ export default function Header({ theme = "navy" }) {
 
   return (
     <>
-      {/* Top utility bar */}
-      <div className={`${t.bar} text-white text-xs md:text-sm`}>
-        <div className="mx-auto max-w-7xl px-14 py-2 flex flex-wrap items-center justify-between gap-y-1">
-          <div className="flex flex-wrap items-center gap-x-7 gap-y-1">
+      {/* Top utility bar — three-column grid so the center info block is
+          always truly centered regardless of icon width on the right */}
+      <div className={`${t.bar} text-white text-[11px] md:text-xs`}>
+        <div className="mx-auto max-w-7xl px-4 py-2 grid grid-cols-[1fr_auto_1fr] items-center gap-3">
+          <span aria-hidden="true" />
+          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-center">
             <span className="flex items-center gap-1.5 whitespace-nowrap">
               <IconTruck /> 24x7 Emergency Care
             </span>
@@ -32,34 +35,36 @@ export default function Header({ theme = "navy" }) {
               <IconPin /> {hospital.addressLine}
             </span>
           </div>
-          <div className="hidden sm:flex items-center gap-3">
+          <div className="hidden sm:flex items-center justify-end gap-3">
             <a href={hospital.facebook} aria-label="Facebook" className="opacity-90 hover:opacity-100"><IconFacebook /></a>
             <a href={hospital.instagram} aria-label="Instagram" className="opacity-90 hover:opacity-100"><IconInstagram /></a>
           </div>
         </div>
       </div>
 
-      {/* Main nav */}
+      {/* Main nav — full nav only from xl (1280px) up, so "Diabetic Foot
+          Clinic" and "Contact Us" never get squeezed into a wrap; below
+          that it's the hamburger menu, consistent on every page. */}
       <header className="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-slate-100 shadow-sm">
         <div className="mx-auto max-w-7xl px-4 py-3 flex items-center justify-between gap-4">
           <Link href="/" className="flex items-center gap-2.5 shrink-0">
-            <LogoMark theme={theme} />
+            <LogoMark />
             <div className="leading-tight">
-              <div className="font-display font-extrabold text-navy text-lg md:text-xl tracking-tight">
+              <div className="font-display font-extrabold text-navy text-lg md:text-xl tracking-tight whitespace-nowrap">
                 WADHAWAN <span className={t.accent}>HOSPITAL</span>
               </div>
-              <div className="text-[11px] text-slate tracking-wide">{hospital.tagline}</div>
+              <div className="text-[11px] text-slate tracking-wide whitespace-nowrap">{hospital.tagline}</div>
             </div>
           </Link>
 
-          <nav className="hidden lg:flex items-center gap-6 font-medium text-navy text-sm">
+          <nav className="hidden xl:flex items-center gap-5 font-semibold text-navy text-[13px] shrink-0">
             {navLinks.map((l) => {
               const active = pathname === l.href;
               return (
                 <Link
                   key={l.href}
                   href={l.href}
-                  className={`pb-1 border-b-2 transition-colors ${active ? `${t.accent} ${t.underline}` : "border-transparent hover:text-slate"}`}
+                  className={`whitespace-nowrap pb-1 border-b-2 transition-colors ${active ? `${t.accent} ${t.underline}` : "border-transparent hover:text-slate"}`}
                 >
                   {l.label}
                 </Link>
@@ -67,17 +72,17 @@ export default function Header({ theme = "navy" }) {
             })}
           </nav>
 
-          <div className="hidden lg:flex items-center gap-3">
-            <a href={`tel:${hospital.phoneTel}`} className={`flex items-center gap-2 border rounded-full px-4 py-2 text-sm font-semibold border-slate-200 ${t.accent} hover:bg-slate-50`}>
+          <div className="hidden xl:flex items-center gap-3 shrink-0">
+            <a href={`tel:${hospital.phoneTel}`} className={`flex items-center gap-2 border rounded-full px-4 py-2 text-sm font-semibold border-slate-200 whitespace-nowrap ${t.accent} hover:bg-slate-50`}>
               <IconPhone /> {hospital.phoneDisplay}
             </a>
-            <a href={waLink()} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-white bg-emerald-600 hover:bg-emerald-700">
+            <a href={waLink()} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-white bg-emerald-600 hover:bg-emerald-700 whitespace-nowrap">
               <IconWhatsapp /> WhatsApp
             </a>
           </div>
 
           <button
-            className="lg:hidden p-2 text-navy"
+            className="xl:hidden p-2 text-navy shrink-0"
             aria-label="Toggle menu"
             onClick={() => setOpen((v) => !v)}
           >
@@ -86,7 +91,7 @@ export default function Header({ theme = "navy" }) {
         </div>
 
         {open && (
-          <div className="lg:hidden border-t border-slate-100 bg-white">
+          <div className="xl:hidden border-t border-slate-100 bg-white">
             <nav className="flex flex-col px-4 py-3">
               {navLinks.map((l) => (
                 <Link
@@ -110,14 +115,11 @@ export default function Header({ theme = "navy" }) {
   );
 }
 
-function LogoMark({ theme }) {
-  const ring = theme === "maroon" ? "#7A0E2E" : theme === "green" ? "#0B4A3A" : "#0E9F9A";
+function LogoMark() {
   return (
-    <svg width="42" height="42" viewBox="0 0 42 42" fill="none" aria-hidden="true">
-      <circle cx="21" cy="21" r="19" stroke={ring} strokeWidth="2.5" fill="white" />
-      <path d="M21 10v22M10 21h22" stroke="#0B2E59" strokeWidth="4" strokeLinecap="round" />
-      <circle cx="30" cy="12" r="3" fill="#DB2777" />
-    </svg>
+    <div className="relative w-10 h-10 md:w-11 md:h-11 shrink-0">
+      <Image src="/images/logo.png" alt="Wadhawan Hospital logo" fill className="object-contain" priority />
+    </div>
   );
 }
 
