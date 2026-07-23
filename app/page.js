@@ -3,7 +3,7 @@ import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { hospital, doctors, testimonials, waLink } from "@/lib/site-data";
-import { PlaceholderImage, SectionHeading, StatCard, TestimonialCarousel, CtaBanner, IconCalendar, IconPhone, IconPin } from "@/components/ui";
+import { PlaceholderImage, SectionHeading, StatCard, TestimonialCarousel, CtaBanner } from "@/components/ui";
 
 export default function HomePage() {
   return (
@@ -11,55 +11,45 @@ export default function HomePage() {
       <Header theme="navy" />
 
       <section className="bg-gradient-to-br from-sky-50 to-white border-b border-slate-100">
-        <div className="md:hidden mx-auto max-w-7xl px-4 py-6">
-          <HeroCopy />
-          <div className="relative w-full aspect-[1717/916] rounded-2xl overflow-hidden mt-6">
-            <Image
-              src="/images/doctors-hospital-hero.png"
-              alt="Dr. Piyush & Dr. Pritika Wadhawan outside Wadhawan Hospital"
-              fill
-              priority
-              className="object-cover"
-              sizes="100vw"
-            />
-          </div>
-          <div className="grid grid-cols-3 gap-2 mt-4">
-            <MiniStatMobile icon={<IconStar />} value={hospital.googleRating} label="Google Rating" />
-            <MiniStatMobile icon={<IconUsers />} value="Multi-Speciality" label="Healthcare" />
-            <MiniStatMobile icon={<IconAmbulance />} value="24×7" label="Emergency" />
-          </div>
-        </div>
-
-        <div className="hidden md:block relative w-full h-[300px] lg:h-[380px] xl:h-[430px] overflow-hidden">
+        <div className="relative w-full aspect-[1983/793]">
           <Image
-            src="/images/doctors-hospital-hero.png"
-            alt="Dr. Piyush & Dr. Pritika Wadhawan outside Wadhawan Hospital"
+            src="/images/hero-banner.png"
+            alt="Wadhawan Hospital — Advanced Orthopedics, Fertility & Gyne Care"
             fill
             priority
-            className="object-cover object-[center_28%]"
+            className="object-cover"
             sizes="100vw"
           />
-          <div className="absolute inset-0 flex items-center">
-            <div className="mx-auto max-w-7xl w-full px-4 flex items-center justify-between">
-              <div className="max-w-lg">
-                <HeroCopy compact />
-              </div>
-              {/* <div className="hidden lg:flex flex-col gap-2.5 shrink-0">
-                <MiniStat icon={<IconStar />} value={hospital.googleRating} label={`Google Rating (${hospital.googleReviews} Reviews)`} />
-                <MiniStat icon={<IconUsers />} value="Multi-Speciality" label="Healthcare" />
-                <MiniStat icon={<IconAmbulance />} value="24×7" label="Emergency Care" />
-              </div> */}
-            </div>
-          </div>
+
+          <Link
+            href="/contact"
+            aria-label="Book Appointment"
+            className="absolute rounded-lg hover:bg-black/5"
+            style={{ left: "5.5%", top: "60%", width: "15%", height: "9%" }}
+          />
+          
+            href={`tel:${hospital.phoneTel}`}
+            aria-label="Call Now"
+            className="absolute rounded-lg hover:bg-black/5"
+            style={{ left: "21.5%", top: "60%", width: "11%", height: "9%" }}
+          />
+          
+            href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(hospital.addressLine)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Get Directions"
+            className="absolute rounded-lg hover:bg-black/5"
+            style={{ left: "33.5%", top: "60%", width: "15%", height: "9%" }}
+          />
         </div>
 
-        {/* <div className="mx-auto max-w-7xl px-4 py-6 grid grid-cols-2 md:grid-cols-5 gap-3 md:gap-4">
-          <StatCard icon={<span className="text-teal">👥</span>} value={hospital.happyPatients} label="Happy Patients" sub="Trusted by thousands of families" />
-          <StatCard icon={<span className="text-amber-500">★</span>} value={hospital.googleRating} label="Google Rating" sub={`${hospital.googleReviews} Reviews from our patients`} />
-          <StatCard icon={<span className="text-pink">24/7</span>} value="24×7" label="Emergency Care" sub="Always here when you need us" />
-          <StatCard icon={<span className="text-navy">🛡️</span>} value={hospital.yearsExperience} label="Years of Experience" sub="Delivering excellence in healthcare" />
-          <StatCard icon={<span className="text-purple-600">👨‍⚕️</span>} value={hospital.specialists} label="Expert Specialists" sub="Orthopedics & Gynecology" />
-        </div> */}
+        <div className="mx-auto max-w-7xl px-4 py-6 grid grid-cols-2 md:grid-cols-5 gap-3 md:gap-4">
+          <StatCard icon={<IconUsersBadge />} value={hospital.happyPatients} label="Happy Patients" sub="Trusted by thousands of families" />
+          <StatCard icon={<IconStarBadge />} value={hospital.googleRating} label="Google Rating" sub={`${hospital.googleReviews} Reviews from our patients`} />
+          <StatCard icon={<Icon247Badge />} value="24×7" label="Emergency Care" sub="Always here when you need us" />
+          <StatCard icon={<IconShieldBadge />} value={hospital.yearsExperience} label="Years of Experience" sub="Delivering excellence in healthcare" />
+          <StatCard icon={<IconSpecialistsBadge />} value={hospital.specialists} label="Expert Specialists" sub="Orthopedics & Gynecology" />
+        </div>
       </section>
 
       <section className="bg-mist py-12">
@@ -67,15 +57,15 @@ export default function HomePage() {
           <SectionHeading eyebrow="" title="Why Choose Wadhawan Hospital?" />
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-8">
             {[
-              ["Experienced Specialists", "Highly qualified & experienced doctors with proven expertise"],
-              ["Modern Technology", "Advanced medical equipment for accurate diagnosis & treatment"],
-              ["24x7 Emergency", "Round-the-clock emergency care always available"],
-              ["Compassionate Care", "Patient-first approach with empathy and personal attention"],
-              ["Affordable Treatment", "Quality healthcare with transparent & affordable pricing"],
-              ["Patient-Centered Approach", "Your health, comfort and satisfaction are our priority"],
-            ].map(([t, d]) => (
+              ["Experienced Specialists", "Highly qualified & experienced doctors with proven expertise", <IconSpecialist key="i" />, "bg-teal/10"],
+              ["Modern Technology", "Advanced medical equipment for accurate diagnosis & treatment", <IconMonitor key="i" />, "bg-sky-100"],
+              ["24x7 Emergency", "Round-the-clock emergency care always available", <Icon247 key="i" />, "bg-pink-light"],
+              ["Compassionate Care", "Patient-first approach with empathy and personal attention", <IconHeartHand key="i" />, "bg-emerald-50"],
+              ["Affordable Treatment", "Quality healthcare with transparent & affordable pricing", <IconRupeeHand key="i" />, "bg-purple-50"],
+              ["Patient-Centered Approach", "Your health, comfort and satisfaction are our priority", <IconGroup key="i" />, "bg-blue-50"],
+            ].map(([t, d, icon, bg]) => (
               <div key={t} className="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm flex gap-3">
-                <div className="w-11 h-11 rounded-xl bg-teal/10 text-teal flex items-center justify-center shrink-0">✓</div>
+                <div className={`w-11 h-11 rounded-xl ${bg} flex items-center justify-center shrink-0`}>{icon}</div>
                 <div>
                   <h3 className="font-semibold text-navy">{t}</h3>
                   <p className="text-sm text-slate mt-1">{d}</p>
@@ -205,50 +195,15 @@ export default function HomePage() {
   );
 }
 
-function HeroCopy({ compact = false }) {
-  return (
-    <>
-      <p className={`section-eyebrow text-teal font-bold uppercase tracking-widest ${compact ? "text-[11px] mb-1.5" : "text-xs mb-3"}`}>Welcome to Wadhawan Hospital</p>
-      <h1 className={`font-display font-extrabold text-navy leading-tight ${compact ? "text-2xl lg:text-3xl xl:text-4xl" : "text-3xl md:text-4xl lg:text-5xl"}`}>
-        Advanced Orthopedics, Fertility &amp; Gyne Care
-      </h1>
-      <p className={`text-teal font-semibold ${compact ? "mt-1.5 text-sm" : "mt-3"}`}>Compassion &nbsp;|&nbsp; Care &nbsp;|&nbsp; Cure</p>
-      {!compact && (
-        <p className="text-slate mt-4 max-w-md leading-relaxed">
-          Wadhawan Hospital is a multi-speciality healthcare center in Panipat providing advanced Orthopedic and Women&apos;s healthcare with compassionate care and modern technology.
-        </p>
-      )}
-      <div className={`flex flex-wrap gap-2.5 ${compact ? "mt-3" : "mt-6"}`}>
-        <Link href="/contact" className={`bg-navy hover:bg-navy-dark text-white font-semibold rounded-lg flex items-center gap-2 ${compact ? "px-4 py-2 text-sm" : "px-6 py-3"}`}><IconCalendar /> Book Appointment</Link>
-        <a href={`tel:${hospital.phoneTel}`} className={`border-2 border-teal text-teal font-semibold rounded-lg flex items-center gap-2 bg-white/80 backdrop-blur hover:bg-white ${compact ? "px-4 py-2 text-sm" : "px-6 py-3"}`}><IconPhone /> Call Now</a>
-        <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(hospital.addressLine)}`} target="_blank" rel="noopener noreferrer" className={`border-2 border-navy text-navy font-semibold rounded-lg flex items-center gap-2 bg-white/80 backdrop-blur hover:bg-white ${compact ? "px-4 py-2 text-sm" : "px-6 py-3"}`}><IconPin /> Get Directions</a>
-      </div>
-    </>
-  );
-}
+function IconUsersBadge() { return (<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0E9F9A" strokeWidth="2"><circle cx="9" cy="8" r="3"/><path d="M2 20c0-3.3 3.1-6 7-6s7 2.7 7 6"/><circle cx="17" cy="9" r="2.3"/><path d="M15.5 14.3c2.7.4 5.5 2.4 5.5 5.7"/></svg>); }
+function IconStarBadge() { return (<svg width="20" height="20" viewBox="0 0 24 24" fill="#F59E0B"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.8L6 21l1.6-7L2.2 9.2l7.1-.6z"/></svg>); }
+function Icon247Badge() { return (<svg width="26" height="20" viewBox="0 0 40 24" fill="none"><text x="0" y="17" fontSize="15" fontWeight="700" fill="#DB2777" fontFamily="sans-serif">24/7</text></svg>); }
+function IconShieldBadge() { return (<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="2"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4" strokeLinecap="round" strokeLinejoin="round"/></svg>); }
+function IconSpecialistsBadge() { return (<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9333EA" strokeWidth="2"><circle cx="8" cy="8" r="2.8"/><circle cx="16" cy="8" r="2.8"/><path d="M2 19c0-2.8 2.7-5 6-5s6 2.2 6 5M12 19c0-2.5 2.4-4.5 5.3-4.5S22.6 16.5 22.6 19" /></svg>); }
 
-function MiniStat({ icon, value, label }) {
-  return (
-    <div className="bg-white rounded-xl shadow-lg px-4 py-2.5 flex items-center gap-2.5 min-w-[200px]">
-      <span className="shrink-0 w-8 h-8 rounded-full bg-mist flex items-center justify-center">{icon}</span>
-      <div>
-        <p className="font-bold text-navy text-sm leading-tight">{value}</p>
-        <p className="text-[11px] text-slate leading-tight">{label}</p>
-      </div>
-    </div>
-  );
-}
-
-function MiniStatMobile({ icon, value, label }) {
-  return (
-    <div className="bg-white rounded-xl shadow-sm border border-slate-100 px-2 py-3 text-center">
-      <span className="inline-flex w-6 h-6 rounded-full bg-mist items-center justify-center">{icon}</span>
-      <p className="font-bold text-navy text-xs leading-tight mt-1">{value}</p>
-      <p className="text-[10px] text-slate leading-tight">{label}</p>
-    </div>
-  );
-}
-
-function IconStar() { return (<svg width="14" height="14" viewBox="0 0 24 24" fill="#F59E0B"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.8L6 21l1.6-7L2.2 9.2l7.1-.6z"/></svg>); }
-function IconUsers() { return (<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0E9F9A" strokeWidth="2"><circle cx="9" cy="8" r="3"/><path d="M2 20c0-3.3 3.1-6 7-6s7 2.7 7 6"/><circle cx="17" cy="9" r="2.5"/><path d="M15.5 14.3c2.8.4 5.5 2.4 5.5 5.7"/></svg>); }
-function IconAmbulance() { return (<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#DB2777" strokeWidth="2"><path d="M3 16V7a1 1 0 011-1h9v10"/><path d="M13 10h4l3 3v3h-7z"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/><path d="M7 8v4M5 10h4" strokeLinecap="round"/></svg>); }
+function IconSpecialist() { return (<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0E9F9A" strokeWidth="2"><circle cx="12" cy="8" r="3.5"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>); }
+function IconMonitor() { return (<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="2"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M8 20h8M12 16v4" strokeLinecap="round"/><path d="M7 9l2.5 2.5L12 9l2 2 3-3" strokeLinecap="round" strokeLinejoin="round"/></svg>); }
+function Icon247() { return (<svg width="26" height="20" viewBox="0 0 40 24" fill="none"><text x="0" y="17" fontSize="15" fontWeight="700" fill="#DB2777" fontFamily="sans-serif">24/7</text></svg>); }
+function IconHeartHand() { return (<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0D9488" strokeWidth="2"><path d="M12 6c1.2-1.6 3.5-1.8 4.8-.5 1.4 1.4 1.4 3.6 0 5L12 15l-4.8-4.5c-1.4-1.4-1.4-3.6 0-5 1.3-1.3 3.6-1.1 4.8.5z"/><path d="M4 20c1.5-1.8 3.6-2 5.2-1l2 1.2c1 .6 2.3.4 3-.5l3-3.7" strokeLinecap="round"/></svg>); }
+function IconRupeeHand() { return (<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9333EA" strokeWidth="2"><path d="M8 5h8M8 8h8M8 5c3 0 5 1.5 5 3.5S11 12 8 12h1l6 6" strokeLinecap="round" strokeLinejoin="round"/><path d="M3 19c1.5-1.8 3.6-2 5.2-1l2 1.2c1 .6 2.3.4 3-.5" strokeLinecap="round"/></svg>); }
+function IconGroup() { return (<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="2"><circle cx="8" cy="8" r="2.8"/><circle cx="16" cy="8" r="2.8"/><path d="M2 19c0-2.8 2.7-5 6-5s6 2.2 6 5M12 19c0-2.5 2.4-4.5 5.3-4.5S22.6 16.5 22.6 19"/></svg>); }
