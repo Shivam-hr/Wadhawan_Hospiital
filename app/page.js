@@ -10,39 +10,46 @@ export default function HomePage() {
     <>
       <Header theme="navy" />
 
+      {/* HERO */}
       <section className="bg-gradient-to-br from-sky-50 to-white border-b border-slate-100">
         <div className="relative w-full aspect-[1983/793]">
           <Image
             src="/images/hero-banner.png"
-            alt="Wadhawan Hospital — Advanced Orthopedics, Fertility & Gyne Care"
+            alt="Dr. Piyush & Dr. Pritika Wadhawan outside Wadhawan Hospital"
             fill
             priority
             className="object-cover"
             sizes="100vw"
           />
 
-          <Link
-            href="/contact"
-            aria-label="Book Appointment"
-            className="absolute rounded-lg hover:bg-black/5"
-            style={{ left: "5.5%", top: "60%", width: "15%", height: "9%" }}
-          />
-          
-            href={`tel:${hospital.phoneTel}`}
-            aria-label="Call Now"
-            className="absolute rounded-lg hover:bg-black/5"
-            style={{ left: "21.5%", top: "60%", width: "11%", height: "9%" }}
-          />
-          
-            href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(hospital.addressLine)}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Get Directions"
-            className="absolute rounded-lg hover:bg-black/5"
-            style={{ left: "33.5%", top: "60%", width: "15%", height: "9%" }}
-          />
+          <div className="absolute inset-0 flex items-center">
+            <div className="w-[42%] sm:w-[38%] pl-[3%] sm:pl-[5%]">
+              <p className="text-teal font-bold uppercase tracking-widest text-[9px] sm:text-[11px] lg:text-xs mb-1 sm:mb-2">Welcome to Wadhawan Hospital</p>
+              <h1 className="font-display font-extrabold text-navy leading-tight text-base sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl">
+                Advanced Orthopedics, Fertility &amp; Gyne Care
+              </h1>
+              <p className="text-teal font-semibold text-[9px] sm:text-sm mt-1 sm:mt-3">Compassion&nbsp;|&nbsp;Care&nbsp;|&nbsp;Cure</p>
+              <div className="flex flex-wrap gap-1 sm:gap-2.5 mt-2 sm:mt-6">
+                <Link href="/contact" className="bg-navy hover:bg-navy-dark text-white font-semibold rounded-md sm:rounded-lg px-2 py-1 sm:px-5 sm:py-2.5 text-[9px] sm:text-sm">
+                  Book Appointment
+                </Link>
+                <a href={`tel:${hospital.phoneTel}`} className="border border-teal sm:border-2 text-teal font-semibold rounded-md sm:rounded-lg px-2 py-1 sm:px-5 sm:py-2.5 text-[9px] sm:text-sm bg-white/80">
+                  Call Now
+                </a>
+                <a
+                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(hospital.addressLine)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="border border-navy sm:border-2 text-navy font-semibold rounded-md sm:rounded-lg px-2 py-1 sm:px-5 sm:py-2.5 text-[9px] sm:text-sm bg-white/80"
+                >
+                  Get Directions
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
 
+        {/* Stat strip */}
         <div className="mx-auto max-w-7xl px-4 py-6 grid grid-cols-2 md:grid-cols-5 gap-3 md:gap-4">
           <StatCard icon={<IconUsersBadge />} value={hospital.happyPatients} label="Happy Patients" sub="Trusted by thousands of families" />
           <StatCard icon={<IconStarBadge />} value={hospital.googleRating} label="Google Rating" sub={`${hospital.googleReviews} Reviews from our patients`} />
@@ -52,6 +59,7 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* WHY CHOOSE US strip */}
       <section className="bg-mist py-12">
         <div className="mx-auto max-w-7xl px-4">
           <SectionHeading eyebrow="" title="Why Choose Wadhawan Hospital?" />
@@ -76,6 +84,7 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* SPECIALITIES strip */}
       <section className="mx-auto max-w-7xl px-4 py-14">
         <SectionHeading title="Our Specialities" />
         <div className="grid md:grid-cols-2 gap-6 mt-8">
@@ -112,6 +121,7 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* DOCTORS strip */}
       <section className="bg-mist py-14">
         <div className="mx-auto max-w-7xl px-4">
           <div className="flex items-center justify-between">
@@ -140,6 +150,7 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* FACILITIES strip */}
       <section className="mx-auto max-w-7xl px-4 py-14">
         <SectionHeading title="Our Hospital Facilities" />
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8">
@@ -162,6 +173,7 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* GALLERY PREVIEW strip */}
       <section className="bg-mist py-14">
         <div className="mx-auto max-w-7xl px-4">
           <SectionHeading title="Hospital Gallery" />
@@ -176,6 +188,7 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* TESTIMONIALS strip */}
       <section className="mx-auto max-w-7xl px-4 py-14">
         <SectionHeading title="What Our Patients Say" />
         <div className="grid md:grid-cols-2 gap-6 mt-8 items-start">
