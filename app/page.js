@@ -14,7 +14,7 @@ export default function HomePage() {
       <section className="bg-gradient-to-br from-sky-50 to-white border-b border-slate-100">
         <div className="relative w-full aspect-[1983/793]">
           <Image
-            src="/images/hero-banner.png"
+            src="/images/home/hero-banner.png"
             alt="Dr. Piyush & Dr. Pritika Wadhawan outside Wadhawan Hospital"
             fill
             priority
@@ -85,31 +85,51 @@ export default function HomePage() {
       </section>
 
       {/* SPECIALITIES strip */}
+      {/* SPECIALITIES */}
       <section className="mx-auto max-w-7xl px-4 py-14">
         <SectionHeading title="Our Specialities" />
         <div className="grid md:grid-cols-2 gap-6 mt-8">
-          <div className="bg-gradient-to-br from-sky-50 to-white rounded-2xl p-6 md:p-8 border border-slate-100">
-            <h3 className="font-display text-xl font-bold text-navy">ORTHOPEDICS</h3>
-            <p className="text-teal font-semibold text-sm mb-4">Restoring Mobility. Enhancing Lives.</p>
-            <ul className="grid grid-cols-2 gap-y-2 text-sm text-navy/90 mb-5">
-              {["Knee Pain Treatment", "Sports Injury Treatment", "Joint Replacement", "Arthroscopy", "Fracture Care", "Ligament Repair"].map((i) => (
-                <li key={i} className="flex items-center gap-2"><span className="text-teal">✓</span>{i}</li>
-              ))}
-            </ul>
-            <Link href="/orthopedics" className="inline-flex items-center gap-2 bg-navy hover:bg-navy-dark text-white text-sm font-semibold rounded-lg px-5 py-2.5">Explore Orthopedics →</Link>
+          <div className="relative rounded-2xl overflow-hidden border border-slate-100 min-h-[300px] sm:min-h-[280px] md:min-h-[320px]">
+            <Image
+              src="/images/home/ortho.jpg"
+              alt="Orthopedics — knee joint illustration"
+              fill
+              className="object-cover"
+              sizes="(min-width: 768px) 50vw, 100vw"
+            />
+            <div className="relative z-10 h-full flex flex-col justify-center p-6 md:p-8 pl-[27%] sm:pl-[24%]">
+              <h3 className="font-display text-lg sm:text-xl font-bold text-navy">ORTHOPEDICS</h3>
+              <p className="text-teal font-semibold text-xs sm:text-sm mb-3 sm:mb-4">Restoring Mobility. Enhancing Lives.</p>
+              <ul className="grid grid-cols-2 gap-y-1.5 sm:gap-y-2 text-[11px] sm:text-sm text-navy/90 mb-4 sm:mb-5">
+                {["Knee Pain Treatment", "Sports Injury Treatment", "Joint Replacement", "Arthroscopy", "Fracture Care", "Ligament Repair"].map((i) => (
+                  <li key={i} className="flex items-center gap-1.5 sm:gap-2"><span className="text-teal">✓</span>{i}</li>
+                ))}
+              </ul>
+              <Link href="/orthopedics" className="self-start inline-flex items-center gap-2 bg-navy hover:bg-navy-dark text-white text-xs sm:text-sm font-semibold rounded-lg px-4 py-2 sm:px-5 sm:py-2.5">Explore Orthopedics →</Link>
+            </div>
           </div>
-          <div className="bg-gradient-to-br from-pink-light to-white rounded-2xl p-6 md:p-8 border border-slate-100">
-            <h3 className="font-display text-xl font-bold text-maroon">GYNECOLOGY</h3>
-            <p className="text-pink font-semibold text-sm mb-4">Women&apos;s Health. Our Priority.</p>
-            <ul className="grid grid-cols-2 gap-y-2 text-sm text-navy/90 mb-5">
-              {["Pregnancy & Maternity Care", "High-Risk Pregnancy Care", "PCOD / PCOS Treatment", "Laparoscopic Gynec Surgery", "Infertility & Fertility Care", "Menstrual Disorders"].map((i) => (
-                <li key={i} className="flex items-center gap-2"><span className="text-pink">✓</span>{i}</li>
-              ))}
-            </ul>
-            <Link href="/gynecology" className="inline-flex items-center gap-2 bg-pink hover:bg-maroon text-white text-sm font-semibold rounded-lg px-5 py-2.5">Explore Gynecology →</Link>
+
+          <div className="relative rounded-2xl overflow-hidden border border-slate-100 min-h-[300px] sm:min-h-[280px] md:min-h-[320px]">
+            <Image
+              src="/images/home/gynecology.png"
+              alt="Gynecology — pregnancy illustration"
+              fill
+              className="object-cover"
+              sizes="(min-width: 768px) 50vw, 100vw"
+            />
+            <div className="relative z-10 h-full flex flex-col justify-center p-6 md:p-8 pl-[24%] sm:pl-[21%]">
+              <h3 className="font-display text-lg sm:text-xl font-bold text-maroon">GYNECOLOGY</h3>
+              <p className="text-pink font-semibold text-xs sm:text-sm mb-3 sm:mb-4">Women&apos;s Health. Our Priority.</p>
+              <ul className="grid grid-cols-2 gap-y-1.5 sm:gap-y-2 text-[11px] sm:text-sm text-navy/90 mb-4 sm:mb-5">
+                {["Pregnancy & Maternity Care", "High-Risk Pregnancy Care", "PCOD / PCOS Treatment", "Laparoscopic Gynec Surgery", "Infertility & Fertility Care", "Menstrual Disorders"].map((i) => (
+                  <li key={i} className="flex items-center gap-1.5 sm:gap-2"><span className="text-pink">✓</span>{i}</li>
+                ))}
+              </ul>
+              <Link href="/gynecology" className="self-start inline-flex items-center gap-2 bg-pink hover:bg-maroon text-white text-xs sm:text-sm font-semibold rounded-lg px-4 py-2 sm:px-5 sm:py-2.5">Explore Gynecology →</Link>
+            </div>
           </div>
         </div>
-        <div className="bg-gradient-to-br from-emerald-50 to-white rounded-2xl p-6 md:p-8 border border-slate-100 mt-6">
+        {/* <div className="bg-gradient-to-br from-emerald-50 to-white rounded-2xl p-6 md:p-8 border border-slate-100 mt-6">
           <h3 className="font-display text-xl font-bold text-green">DIABETIC FOOT CLINIC</h3>
           <p className="text-emerald font-semibold text-sm mb-4">Expert Care. Healthy Feet. Better Tomorrows.</p>
           <ul className="grid sm:grid-cols-2 md:grid-cols-3 gap-y-2 text-sm text-navy/90 mb-5">
@@ -118,11 +138,52 @@ export default function HomePage() {
             ))}
           </ul>
           <Link href="/diabetic-foot-clinic" className="inline-flex items-center gap-2 bg-emerald hover:bg-green text-white text-sm font-semibold rounded-lg px-5 py-2.5">Explore Diabetic Foot Clinic →</Link>
+        </div> */}
+      </section>
+
+      {/* DOCTORS */}
+      <section className="bg-mist py-0">
+        <div className="mx-auto max-w-7xl px-4">
+          <div className="flex items-center justify-between">
+            <SectionHeading title="Meet Our Doctors" center={false} />
+            <Link href="/doctors" className="text-teal font-semibold text-sm hidden sm:block">View All →</Link>
+          </div>
+          <div className="grid md:grid-cols-2 gap-6 mt-8">
+            {doctors.map((doc) => {
+              const isMaroon = doc.theme === "maroon";
+              return (
+                <div
+                  key={doc.slug}
+                  className={`relative rounded-2xl overflow-hidden border-t-4 shadow-sm min-h-[270px] sm:min-h-[250px] ${isMaroon ? "border-t-pink" : "border-t-navy"}`}
+                >
+                  <Image
+                    src={isMaroon ? "/images/home/dr-gyno.png" : "/images/home/dr-ortho.png"}
+                    alt={doc.name}
+                    fill
+                    className="object-cover"
+                    sizes="(min-width: 768px) 50vw, 100vw"
+                  />
+                  <div className={`relative z-10 h-full flex flex-col justify-center p-5 sm:p-6 ${isMaroon ? "pl-[34%] sm:pl-[30%]" : "pl-[27%] sm:pl-[24%]"}`}>
+                    <h3 className={`font-display font-bold text-base sm:text-lg ${isMaroon ? "text-maroon" : "text-navy"}`}>{doc.name}</h3>
+                    <p className="text-xs sm:text-sm font-semibold text-navy/70">{doc.qualification}</p>
+                    <p className={`text-[11px] sm:text-xs font-medium mb-1.5 sm:mb-2 ${isMaroon ? "text-pink" : "text-teal"}`}>{doc.role}</p>
+                    <ul className="text-[10px] sm:text-xs text-slate space-y-0.5 sm:space-y-1 mb-2.5 sm:mb-3">
+                      {doc.points.slice(0, 2).map((p) => <li key={p}>✓ {p}</li>)}
+                    </ul>
+                    <div className="flex gap-2">
+                      <Link href={isMaroon ? "/gynecology" : "/orthopedics"} className={`text-[11px] sm:text-xs font-semibold text-white rounded-lg px-2.5 py-1.5 sm:px-3 sm:py-2 ${isMaroon ? "bg-pink" : "bg-navy"}`}>View Profile →</Link>
+                      <a href={waLink(`Hi, I'd like to consult ${doc.name}.`)} className="text-[11px] sm:text-xs font-semibold rounded-lg px-2.5 py-1.5 sm:px-3 sm:py-2 border border-emerald-500 text-emerald-600 bg-white/70">WhatsApp</a>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </section>
 
       {/* DOCTORS strip */}
-      <section className="bg-mist py-14">
+      {/* <section className="bg-mist py-14">
         <div className="mx-auto max-w-7xl px-4">
           <div className="flex items-center justify-between">
             <SectionHeading title="Meet Our Doctors" center={false} />
@@ -148,7 +209,7 @@ export default function HomePage() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* FACILITIES strip */}
       <section className="mx-auto max-w-7xl px-4 py-14">
