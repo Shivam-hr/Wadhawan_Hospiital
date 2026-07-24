@@ -23,7 +23,6 @@ import {
   IconXray,
   IconFlask,
   IconPill,
-  IconQuote,
 } from "@/components/ui";
 
 export const metadata = { title: "About Us | Wadhawan Hospital" };
@@ -208,22 +207,59 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* MESSAGE FROM OUR DOCTORS
-          Solo doctor photos not supplied yet — placeholders mark the
-          exact spot (dr-piyush-solo.jpg / dr-pritika-solo.jpg suggested
-          filenames) until the real portraits are ready. */}
-      <section className="mx-auto max-w-7xl px-4 py-14">
-        <SectionHeading title="Message From Our Doctors" />
-        <div className="grid md:grid-cols-2 gap-6 mt-10 relative">
-          <div className="hidden md:flex absolute inset-0 items-center justify-center pointer-events-none">
-            <div className="w-12 h-12 rounded-full bg-white shadow-md border border-slate-100 flex items-center justify-center text-teal">
-              <IconQuote size={22} />
-            </div>
+      {/* MESSAGE FROM OUR DOCTORS — real banner graphic supplied by the
+          client (photos + cards + heartbeat line baked in). Full-bleed,
+          edge to edge, and cropped to trim only the empty space below
+          the cards (verified pixel-by-pixel that the photos themselves
+          end well above the crop line, so nothing gets cut off). Text
+          is real HTML positioned to sit exactly inside the two card
+          shapes already drawn in the image. */}
+      <section className="py-10">
+        <div className="mx-auto max-w-7xl px-4">
+          <SectionHeading title="Message From Our Doctors" />
+        </div>
+        <div className="relative w-full mt-6 hidden md:block" style={{ aspectRatio: "1983 / 724" }}>
+          <Image
+            src="/images/about/doctors-banner.png"
+            alt="Message from Dr. Piyush Wadhawan and Dr. Pritika Nijhara Wadhawan"
+            fill
+            className="object-cover object-top"
+            sizes="100vw"
+          />
+          {/* Text inside Dr. Piyush's card */}
+          <div
+            className="absolute flex flex-col justify-center px-[3%]"
+            style={{ left: "15.7%", top: "15.9%", width: "27.9%", height: "73.9%" }}
+          >
+            <h4 className="font-display font-bold text-navy text-lg lg:text-xl">Dr. Piyush Wadhawan</h4>
+            <p className="text-sm font-semibold text-navy/80 mt-1">MBBS, MS (Orthopaedics)</p>
+            <p className="text-sm font-medium text-teal">Orthopedic &amp; Joint Replacement Surgeon</p>
+            <p className="text-sm text-slate leading-relaxed mt-3">
+              &ldquo;Our commitment is to restore mobility, reduce pain and improve the quality of life with advanced treatment and compassionate care.&rdquo;
+            </p>
           </div>
+          {/* Text inside Dr. Pritika's card */}
+          <div
+            className="absolute flex flex-col justify-center px-[3%]"
+            style={{ left: "56.8%", top: "15.9%", width: "27.7%", height: "73.9%" }}
+          >
+            <h4 className="font-display font-bold text-maroon text-lg lg:text-xl">Dr. Pritika Nijhara Wadhawan</h4>
+            <p className="text-sm font-semibold text-navy/80 mt-1">MBBS, MS (Obstetrics &amp; Gynecology)</p>
+            <p className="text-sm font-medium text-pink">Obstetrician &amp; Laparoscopic Surgeon</p>
+            <p className="text-sm text-slate leading-relaxed mt-3">
+              &ldquo;Women&apos;s health is our priority. We provide personalized care at every stage of life with empathy, respect and medical excellence.&rdquo;
+            </p>
+          </div>
+        </div>
+
+        {/* Mobile fallback — the banner's side-anchored photos and
+            fine card proportions don't scale down to a phone width,
+            so mobile gets simple stacked cards with the same copy. */}
+        <div className="md:hidden grid gap-6 mt-8 max-w-7xl mx-auto px-4">
           {doctors.map((doc) => (
             <div
               key={doc.slug}
-              className={`rounded-2xl p-6 md:p-8 flex flex-col sm:flex-row items-center sm:items-start gap-5 ${
+              className={`rounded-2xl p-6 flex flex-col sm:flex-row items-center sm:items-start gap-5 ${
                 doc.theme === "maroon" ? "bg-pink-50" : "bg-sky-50"
               }`}
             >

@@ -1,6 +1,7 @@
 "use client";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { hospital, waLink } from "@/lib/site-data";
 
 /* ---------- Placeholder image block (no real photo supplied yet) ---------- */
@@ -30,7 +31,13 @@ export function SectionHeading({ eyebrow, title, accent = "teal", center = true 
     <div className={center ? "text-center" : ""}>
       {eyebrow && <p className={`section-eyebrow text-xs font-bold uppercase tracking-widest ${accentClass} mb-2`}>{eyebrow}</p>}
       <h2 className="font-display text-2xl md:text-3xl font-bold text-navy">{title}</h2>
-      <div className={`h-1 w-14 ${accent === "pink" ? "bg-pink" : accent === "emerald" ? "bg-emerald" : "bg-teal"} rounded-full ${center ? "mx-auto" : ""} mt-3`} />
+      <svg
+        className={`heartbeat-line ${accentClass} mt-3 ${center ? "mx-auto" : ""}`}
+        width="72" height="18" viewBox="0 0 72 18" fill="none"
+        aria-hidden="true"
+      >
+        <path d="M0 9H22L27 2L33 16L39 9H72" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
     </div>
   );
 }
@@ -136,40 +143,81 @@ export function FaqAccordion({ items, accent = "teal" }) {
 }
 
 /* ---------- Bottom CTA banner ---------- */
-export function CtaBanner({ theme = "navy", heading, sub }) {
-  const bg = { navy: "bg-navy", maroon: "bg-pink", green: "bg-emerald" }[theme];
+export function CtaBanner({ heading, sub }) {
   return (
-    <div className={`${bg} text-white`}>
-      <div className="mx-auto max-w-7xl px-4 py-6 flex flex-col md:flex-row items-center justify-between gap-5">
-        <div>
-          <p className="font-display font-bold text-lg">{heading}</p>
-          <p className="text-white/80 text-sm">{sub}</p>
-        </div>
-        <div className="flex flex-wrap gap-4">
-          <QuickAction href="/contact" icon={<IconCalendar />} label="Book Appointment" />
-          <QuickAction href={waLink()} icon={<IconWhatsapp />} label="Chat on WhatsApp" external />
-          <QuickAction href={`tel:${hospital.phoneTel}`} icon={<IconPhone />} label={`Call ${hospital.phoneDisplay}`} />
-          <QuickAction
-            href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(hospital.addressLine)}`}
-            icon={<IconPin />}
-            label="Get Directions"
-            external
+    <div className="mx-auto max-w-7xl px-4 py-6">
+      <div className="relative rounded-2xl overflow-hidden">
+        <div className="relative w-full" style={{ aspectRatio: "2171 / 222" }}>
+          <Image
+            src="/images/cta-banner-bg.png"
+            alt=""
+            fill
+            className="object-cover"
+            sizes="100vw"
           />
         </div>
+        <div className="absolute inset-0 flex flex-col md:flex-row items-center justify-between gap-4 px-6 md:px-10 text-white">
+          <div className="text-center md:text-left shrink-0">
+            <p className="font-display font-bold text-base md:text-lg leading-tight">{heading}</p>
+            <p className="text-white/80 text-xs md:text-sm mt-0.5">{sub}</p>
+          </div>
+          <div className="hidden md:flex items-stretch gap-6 lg:gap-8">
+            <QuickAction href="/contact" icon={<IconCalendar />} label="Book Appointment" sub="Schedule your visit" />
+            <QuickAction href={waLink()} icon={<IconWhatsapp />} label="Chat on WhatsApp" sub="Get instant assistance" external divider />
+            <QuickAction href={`tel:${hospital.phoneTel}`} icon={<IconPhone />} label="Call Now" sub={hospital.phoneDisplay} divider />
+            <QuickAction
+              href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(hospital.addressLine)}`}
+              icon={<IconPin />}
+              label="Get Directions"
+              sub="Find us easily"
+              external
+              divider
+            />
+          </div>
+        </div>
+      </div>
+      {/* Mobile — the compact photo strip has no room for 4 two-line
+          actions, so mobile gets simple icon-only buttons below it. */}
+      <div className="md:hidden flex justify-center gap-6 mt-4">
+        <QuickActionMobile href="/contact" icon={<IconCalendar />} label="Book" />
+        <QuickActionMobile href={waLink()} icon={<IconWhatsapp />} label="WhatsApp" external />
+        <QuickActionMobile href={`tel:${hospital.phoneTel}`} icon={<IconPhone />} label="Call" />
+        <QuickActionMobile
+          href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(hospital.addressLine)}`}
+          icon={<IconPin />}
+          label="Directions"
+          external
+        />
       </div>
     </div>
   );
 }
-function QuickAction({ href, icon, label, external }) {
+function QuickAction({ href, icon, label, sub, external, divider }) {
   return (
     <a
       href={href}
       target={external ? "_blank" : undefined}
       rel={external ? "noopener noreferrer" : undefined}
-      className="flex items-center gap-2 text-sm font-semibold"
+      className={`flex items-center gap-2.5 ${divider ? "border-l border-white/25 pl-6 lg:pl-8" : ""}`}
     >
-      <span className="w-9 h-9 rounded-full bg-white/15 flex items-center justify-center">{icon}</span>
-      {label}
+      <span className="w-9 h-9 rounded-full bg-white/15 flex items-center justify-center shrink-0">{icon}</span>
+      <span className="leading-tight">
+        <span className="block text-sm font-semibold">{label}</span>
+        <span className="block text-xs text-white/75">{sub}</span>
+      </span>
+    </a>
+  );
+}
+function QuickActionMobile({ href, icon, label, external }) {
+  return (
+    <a
+      href={href}
+      target={external ? "_blank" : undefined}
+      rel={external ? "noopener noreferrer" : undefined}
+      className="flex flex-col items-center gap-1 text-navy"
+    >
+      <span className="w-10 h-10 rounded-full bg-mist flex items-center justify-center">{icon}</span>
+      <span className="text-[11px] font-semibold">{label}</span>
     </a>
   );
 }
@@ -255,5 +303,157 @@ export function IconClock24({ size = 20 }) {
       <circle cx="12" cy="12" r="9" />
       <path d="M12 7v5l3.5 2" />
     </svg>
+  );
+}
+
+/* ---------- Facilities-grid icons ---------- */
+export function IconAmbulance({ size = 20 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M3 16V7a1 1 0 011-1h8v10" />
+      <path d="M12 10h4l3 3v3h-2" />
+      <circle cx="7" cy="17.5" r="1.6" />
+      <circle cx="16.5" cy="17.5" r="1.6" />
+      <path d="M6 8.5v3.5M4.3 10.3h3.4" />
+    </svg>
+  );
+}
+export function IconSurgery({ size = 20 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4 18h16" />
+      <path d="M6 18v-3a2 2 0 012-2h8a2 2 0 012 2v3" />
+      <circle cx="8.5" cy="6" r="1.8" />
+      <path d="M9.8 7.3L14 11.5M15.5 5l-4 4" />
+    </svg>
+  );
+}
+export function IconXray({ size = 20 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="3" width="18" height="18" rx="2" />
+      <path d="M8 8c0 2 1 2 1 4s-1 2-1 4M12 7c0 2.3 1.2 2.3 1.2 4.5S12 16 12 18.3M16 8c0 2 1 2 1 4s-1 2-1 4" />
+    </svg>
+  );
+}
+export function IconFlask({ size = 20 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M10 3h4M9.5 3v6.5L5 18a1.6 1.6 0 001.4 2.3h11.2A1.6 1.6 0 0019 18l-4.5-8.5V3" />
+      <path d="M7.5 15h9" />
+    </svg>
+  );
+}
+export function IconPill({ size = 20 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="9" width="18" height="6" rx="3" transform="rotate(-45 12 12)" />
+      <path d="M12 7l5 5" />
+    </svg>
+  );
+}
+export function IconQuote({ size = 22 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
+      <path d="M7.5 6C4.5 7.6 3 10 3 12.8c0 2.4 1.5 4 3.4 4 1.7 0 3-1.3 3-3 0-1.6-1.1-2.8-2.6-2.9.3-1.5 1.5-2.9 3.2-3.7L7.5 6zm9 0C13.5 7.6 12 10 12 12.8c0 2.4 1.5 4 3.4 4 1.7 0 3-1.3 3-3 0-1.6-1.1-2.8-2.6-2.9.3-1.5 1.5-2.9 3.2-3.7L16.5 6z" />
+    </svg>
+  );
+}
+export function IconGoogleG({ size = 18 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24">
+      <path fill="#4285F4" d="M22 12.2c0-.7-.06-1.4-.18-2H12v3.9h5.6a4.8 4.8 0 01-2.1 3.2v2.6h3.4c2-1.8 3.1-4.5 3.1-7.7z" />
+      <path fill="#34A853" d="M12 22c2.8 0 5.2-.9 6.9-2.5l-3.4-2.6c-.9.6-2.1 1-3.5 1-2.7 0-5-1.8-5.8-4.3H2.7v2.7A10 10 0 0012 22z" />
+      <path fill="#FBBC05" d="M6.2 13.6a6 6 0 010-3.8V7.1H2.7a10 10 0 000 9.2l3.5-2.7z" />
+      <path fill="#EA4335" d="M12 6.4c1.5 0 2.9.5 4 1.5l3-3A9.7 9.7 0 0012 2a10 10 0 00-9.3 5.1l3.5 2.7C7 7.8 9.3 6.4 12 6.4z" />
+    </svg>
+  );
+}
+export function IconChevronLeft({ size = 18 }) {
+  return (<svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6" /></svg>);
+}
+export function IconChevronRight({ size = 18 }) {
+  return (<svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6" /></svg>);
+}
+
+/* ---------- Testimonial grid (4-up, horizontal scroll + arrows) ---------- */
+export function TestimonialGrid({ items }) {
+  const scrollerRef = useRef(null);
+  const [active, setActive] = useState(0);
+
+  const scrollToIndex = (idx) => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    const card = el.children[idx];
+    if (card) el.scrollTo({ left: card.offsetLeft - el.offsetLeft, behavior: "smooth" });
+  };
+
+  const handleScroll = () => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    let closest = 0;
+    let closestDist = Infinity;
+    Array.from(el.children).forEach((child, idx) => {
+      const dist = Math.abs(child.offsetLeft - el.offsetLeft - el.scrollLeft);
+      if (dist < closestDist) { closestDist = dist; closest = idx; }
+    });
+    setActive(closest);
+  };
+
+  return (
+    <div className="relative">
+      <div
+        ref={scrollerRef}
+        onScroll={handleScroll}
+        className="flex gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+      >
+        {items.map((t, i) => (
+          <div key={i} className="snap-start shrink-0 w-[85%] sm:w-[46%] lg:w-[24%] bg-white rounded-2xl border border-slate-100 shadow-sm p-5">
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center gap-0.5 text-amber-400">
+                {[0, 1, 2, 3, 4].map((s) => <IconStar key={s} size={15} />)}
+              </div>
+              {t.source === "google" ? (
+                <IconGoogleG size={18} />
+              ) : (
+                <span className="text-[10px] font-semibold text-slate bg-mist px-2 py-1 rounded-full">Verified Patient</span>
+              )}
+            </div>
+            <p className="text-sm text-navy/90 leading-relaxed mb-4">{t.text}</p>
+            <p className="font-semibold text-navy text-sm">{t.name}</p>
+            <p className="text-xs text-slate">{t.city}</p>
+          </div>
+        ))}
+      </div>
+      <div className="flex items-center justify-center gap-3 mt-4">
+        <button
+          type="button"
+          aria-label="Scroll testimonials left"
+          onClick={() => scrollerRef.current?.scrollBy({ left: -320, behavior: "smooth" })}
+          className="w-9 h-9 rounded-full bg-navy text-white flex items-center justify-center shrink-0"
+        >
+          <IconChevronLeft />
+        </button>
+        <div className="flex items-center gap-2">
+          {items.map((_, idx) => (
+            <button
+              key={idx}
+              type="button"
+              aria-label={`Go to testimonial ${idx + 1}`}
+              onClick={() => scrollToIndex(idx)}
+              className={`rounded-full transition-all ${idx === active ? "w-6 h-2 bg-navy" : "w-2 h-2 bg-slate-300"}`}
+            />
+          ))}
+        </div>
+        <button
+          type="button"
+          aria-label="Scroll testimonials right"
+          onClick={() => scrollerRef.current?.scrollBy({ left: 320, behavior: "smooth" })}
+          className="w-9 h-9 rounded-full bg-navy text-white flex items-center justify-center shrink-0"
+        >
+          <IconChevronRight />
+        </button>
+      </div>
+    </div>
   );
 }

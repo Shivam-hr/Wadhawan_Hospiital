@@ -42,3 +42,19 @@ h1, h2, h3, h4, .font-display {
     padding-bottom: 0;
   }
 }
+
+/* Animated ECG-style pulse line used under section headings */
+.heartbeat-line path {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  animation: heartbeat-draw 2.4s ease-in-out infinite;
+}
+@keyframes heartbeat-draw {
+  0% { stroke-dashoffset: 100; opacity: 0.35; }
+  45% { stroke-dashoffset: 0; opacity: 1; }
+  70% { stroke-dashoffset: 0; opacity: 1; }
+  100% { stroke-dashoffset: -100; opacity: 0.35; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .heartbeat-line path { animation: none; stroke-dashoffset: 0; opacity: 1; }
+}
